@@ -1,0 +1,29 @@
+# focused beam
+#
+/run/initialize
+
+#/ReverseCompton/Zip
+/hits/activate Zip 
+
+/gps/verbose 0
+/gps/particle gamma
+/gps/pos/type Surface
+/gps/pos/shape Sphere 
+/gps/pos/centre 0. 0. 0.
+/gps/pos/radius 10. cm
+/gps/ang/type iso
+#/gps/ang/focuspoint 0 0 0 cm
+/gps/ene/type Exp
+/gps/ene/ezero 2
+
+/analysis/setFileName exgps
+/analysis/h1/set 1 100 0 8 MeV
+
+/run/printProgress 100
+#/tracking/verbose 1
+#/event/verbose 1
+
+/control/execute vis.mac
+
+/run/beamOn 10000
+
