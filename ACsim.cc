@@ -54,6 +54,7 @@
 
 int main(int argc,char** argv) {
 
+
   // Construct the default run manager
 #ifdef G4MULTITHREADED
 /*
@@ -75,7 +76,9 @@ int main(int argc,char** argv) {
   runManager->SetUserInitialization(new PhysicsList);
   
   runManager->SetUserInitialization(new ActionInitialization);
-    
+ 
+
+   
 #ifdef G4VIS_USE
   // visualization manager
   G4VisManager* visManager = new G4VisExecutive;
@@ -94,7 +97,7 @@ int main(int argc,char** argv) {
   else          // interactive mode : define UI session
     {
 #ifdef G4UI_USE
-     G4UIExecutive* ui = new G4UIExecutive(argc, argv);
+     G4UIExecutive* ui = new G4UIExecutive(argc, argv, "tcsh");
 #ifdef G4VIS_USE
      UImanager->ApplyCommand("/control/execute vis.mac");
 #endif             
@@ -106,6 +109,7 @@ int main(int argc,char** argv) {
      delete visManager;
 #endif    
     }
+
 
   // job termination
   //

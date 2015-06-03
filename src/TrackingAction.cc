@@ -37,6 +37,7 @@
 #include "G4Track.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
+#include "RootIO.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
@@ -48,32 +49,11 @@ TrackingAction::TrackingAction()
 
 void TrackingAction::PreUserTrackingAction(const G4Track* track)
 {
-  G4int pid               = track->GetDynamicParticle()->GetPDGcode();
-  G4double ekin           = track->GetKineticEnergy();
-  G4ThreeVector vertex    = track->GetPosition();
-  G4ThreeVector direction = track->GetMomentumDirection();
-  G4double weight         = track->GetWeight();
-   
-  G4double x = vertex.x(), y = vertex.y(), z = vertex.z();
-  G4double theta = direction.theta(), phi = direction.phi();
-  if (phi < 0.) phi += twopi;
-  G4double cost = std::cos(theta);
+
+  RootIO::GetInstance()->AddTrack(track);
   
-  G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
-    
-  // fill histograms    
-  analysisManager->FillH1(1,ekin);
-  
-  // fill ntuple  
-  analysisManager->FillNtupleIColumn(0,pid);
-  analysisManager->FillNtupleDColumn(1,ekin);
-  analysisManager->FillNtupleDColumn(2,x);
-  analysisManager->FillNtupleDColumn(3,y);
-  analysisManager->FillNtupleDColumn(4,z);
-  analysisManager->FillNtupleDColumn(5,theta);
-  analysisManager->FillNtupleDColumn(6,phi);
-  analysisManager->AddNtupleRow();  
 }
+
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 

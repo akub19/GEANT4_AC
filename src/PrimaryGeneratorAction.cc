@@ -25,9 +25,6 @@
 //
 // $Id: PrimaryGeneratorAction.cc 67272 2013-02-13 12:05:47Z ihrivnac $
 //
-/// \file eventgenerator/exgps/src/PrimaryGeneratorAction.cc
-/// \brief Implementation of the PrimaryGeneratorAction class
-//
 
 #include "PrimaryGeneratorAction.hh"
 
@@ -36,6 +33,9 @@
 #include "G4ParticleTable.hh"
 #include "G4ParticleDefinition.hh"
 #include "globals.hh"
+
+//#include "radsource.h"
+//#include "cpp_api.h"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 

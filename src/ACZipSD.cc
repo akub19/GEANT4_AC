@@ -31,6 +31,8 @@
 #include "G4SDManager.hh"
 #include "G4ios.hh"
 
+
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 ACZipSD::ACZipSD(const G4String& name, const G4String& hitsCollectionName) 
@@ -43,7 +45,8 @@ ACZipSD::ACZipSD(const G4String& name, const G4String& hitsCollectionName)
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 ACZipSD::~ACZipSD() 
-{}
+{
+}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -58,6 +61,7 @@ void ACZipSD::Initialize(G4HCofThisEvent* hce)
   G4int hcID 
     = G4SDManager::GetSDMpointer()->GetCollectionID(collectionName[0]);
   hce->AddHitsCollection( hcID, fHitsCollection ); 
+
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -73,10 +77,11 @@ G4bool ACZipSD::ProcessHits(G4Step* aStep,
   ACZipHit* newHit = new ACZipHit();
 
   newHit->SetTrackID  (aStep->GetTrack()->GetTrackID());
-  newHit->SetChamberNb(aStep->GetPreStepPoint()->GetTouchableHandle()
-                                               ->GetCopyNumber());
+  newHit->SetPDGID (aStep->GetTrack()->GetDefinition()->GetPDGEncoding());
+  newHit->SetTime(aStep->GetPreStepPoint()->GetGlobalTime());
   newHit->SetEdep(edep);
   newHit->SetPos (aStep->GetPostStepPoint()->GetPosition());
+  newHit->SetParticleEnergy(aStep->GetPreStepPoint()->GetKineticEnergy()); 
 
   fHitsCollection->insert( newHit );
 

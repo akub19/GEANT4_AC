@@ -27,13 +27,20 @@
 #include "EventAction.hh"
 #include "HistoManager.hh"
 
+#include "TClonesArray.h"
+
+
 #include "ACZipHit.hh"
+#include "ACBaseHit.hh"
 #include "G4Event.hh"
 #include "G4EventManager.hh"
 #include "G4TrajectoryContainer.hh"
 #include "G4Trajectory.hh"
 #include "G4ios.hh"
 #include "G4SDManager.hh"
+
+#include "RootIO.hh"
+
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -55,25 +62,29 @@ void EventAction::BeginOfEventAction(const G4Event*)
 
 void EventAction::EndOfEventAction(const G4Event* event)
 {
-
+  
   G4SDManager* fSDM = G4SDManager::GetSDMpointer();
-  G4int collectionID = fSDM->GetCollectionID("ACZipHitsCollection");
-
   G4HCofThisEvent* HCofEvent = event->GetHCofThisEvent();
-  ACZipHitsCollection*  zipHits = (ACZipHitsCollection*)(HCofEvent->GetHC(collectionID));
+  ACZipHitsCollection*  zipHits = (ACZipHitsCollection*)(HCofEvent->GetHC(fSDM->GetCollectionID("ACZipHitsCollection")));
+  ACZipHitsCollection*  vetoHits1 = (ACZipHitsCollection*)(HCofEvent->GetHC(fSDM->GetCollectionID("ACVetoHitsCollection1")));
+  ACZipHitsCollection*  vetoHits2 = (ACZipHitsCollection*)(HCofEvent->GetHC(fSDM->GetCollectionID("ACVetoHitsCollection2")));
+  ACZipHitsCollection*  vetoHits3 = (ACZipHitsCollection*)(HCofEvent->GetHC(fSDM->GetCollectionID("ACVetoHitsCollection3")));
+  //ACZipHitsCollection*  vetoHits4 = (ACZipHitsCollection*)(HCofEvent->GetHC(fSDM->GetCollectionID("ACVetoHitsCollection4")));
+  //ACZipHitsCollection*  vetoHits5 = (ACZipHitsCollection*)(HCofEvent->GetHC(fSDM->GetCollectionID("ACVetoHitsCollection5")));
+  //ACZipHitsCollection*  vetoHits6 = (ACZipHitsCollection*)(HCofEvent->GetHC(fSDM->GetCollectionID("ACVetoHitsCollection6")));
 
+  RootIO::GetInstance()->AddHits(zipHits,0);
+  RootIO::GetInstance()->AddHits(vetoHits1,1);
+  RootIO::GetInstance()->AddHits(vetoHits2,2);
+  RootIO::GetInstance()->AddHits(vetoHits3,3);
+  //RootIO::GetInstance()->AddHits(vetoHits4,4);
+  //RootIO::GetInstance()->AddHits(vetoHits5,5);
+  //RootIO::GetInstance()->AddHits(vetoHits6,6);
+  RootIO::GetInstance()->Write();
 
-  G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
-
-  // fill ntuple  
-  analysisManager->FillNtupleIColumn(2,0,zipHits->GetSize()); // pid
-  analysisManager->FillNtupleDColumn(2,1,1); // E deposited
-  analysisManager->FillNtupleDColumn(2,2,1); // x
-  analysisManager->FillNtupleDColumn(2,3,1); // y
-  analysisManager->FillNtupleDColumn(2,4,1); // z
-  analysisManager->AddNtupleRow(2);
 
 /*
+
   // get number of stored trajectories
 
   G4TrajectoryContainer* trajectoryContainer = event->GetTrajectoryContainer();

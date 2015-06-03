@@ -34,6 +34,7 @@
 
 #include "G4UserRunAction.hh"
 #include "globals.hh"
+#include "TFile.h"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -52,7 +53,7 @@ class RunAction : public G4UserRunAction
    virtual void EndOfRunAction(const G4Run*);
 
   private:
-   HistoManager* fHistoManager;
+   //HistoManager* fHistoManager;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

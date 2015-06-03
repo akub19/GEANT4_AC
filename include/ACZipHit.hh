@@ -54,22 +54,28 @@ class ACZipHit : public G4VHit
 
     // Set methods
     void SetTrackID  (G4int track)      { fTrackID = track; };
-    void SetChamberNb(G4int chamb)      { fChamberNb = chamb; };
+    void SetPDGID    (G4int pdgid)      { fPDGID = pdgid; };
+    void SetTime     (G4double t2)      { fTime = t2; };
     void SetEdep     (G4double de)      { fEdep = de; };
     void SetPos      (G4ThreeVector xyz){ fPos = xyz; };
+    void SetParticleEnergy (G4double e1){ fEnergy = e1; };
 
     // Get methods
     G4int GetTrackID() const     { return fTrackID; };
-    G4int GetChamberNb() const   { return fChamberNb; };
+    G4int GetPDGID() const     { return fPDGID; };
+    G4double GetTime() const   { return fTime; };
     G4double GetEdep() const     { return fEdep; };
     G4ThreeVector GetPos() const { return fPos; };
+    G4double GetParticleEnergy() const { return fEnergy; };
 
   private:
 
       G4int         fTrackID;
-      G4int         fChamberNb;
+      G4int         fPDGID;
+      G4double         fTime;
       G4double      fEdep;
       G4ThreeVector fPos;
+      G4double      fEnergy;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

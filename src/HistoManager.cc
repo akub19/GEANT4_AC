@@ -77,8 +77,7 @@ void HistoManager::Book()
   G4int id = analysis->CreateH1("h1.1","kinetic energy", nbins, vmin, vmax);
   analysis->SetH1Activation(id, false);
 
-  // nTuples
-  //
+  /*
   analysis->SetNtupleDirectoryName("ntuple");
   analysis->SetFirstNtupleId(1);       
   analysis->CreateNtuple("primaries", "Primary Particle Tuple");
@@ -91,13 +90,22 @@ void HistoManager::Book()
   analysis->CreateNtupleDColumn("dirPhi");        //column 6
   analysis->FinishNtuple(); 
 
-  analysis->CreateNtuple("hits", "Zip Hits Tuple");
-  analysis->CreateNtupleIColumn("particleID");    //column 0
-  analysis->CreateNtupleDColumn("Edep");          //column 1
-  analysis->CreateNtupleDColumn("posX");          //column 2
-  analysis->CreateNtupleDColumn("posY");          //column 3
-  analysis->CreateNtupleDColumn("posZ");          //column 4
+  analysis->CreateNtuple("ziphits", "Zip Hits Tuple");
+  analysis->CreateNtupleIColumn("particleIDzip");    //column 0
+  analysis->CreateNtupleDColumn("Edepzip");          //column 1
+  analysis->CreateNtupleDColumn("posXzip");          //column 2
+  analysis->CreateNtupleDColumn("posYzip");          //column 3
+  analysis->CreateNtupleDColumn("posZzip");          //column 4
   analysis->FinishNtuple();
+
+  analysis->CreateNtuple("vetohits", "Veto Hits Tuple");
+  analysis->CreateNtupleIColumn("particleIDveto");    //column 0
+  analysis->CreateNtupleDColumn("Edepveto");          //column 1
+  analysis->CreateNtupleDColumn("posXveto");          //column 2
+  analysis->CreateNtupleDColumn("posYveto");          //column 3
+  analysis->CreateNtupleDColumn("posZveto");          //column 4
+  analysis->FinishNtuple();
+  */
 
 }
 

@@ -15,24 +15,51 @@ else()
   find_package(Geant4 REQUIRED)
 endif()
 
+set(CMAKE_MODULE_PATH $ENV{ROOTSYS}/etc/cmake)
+find_package(ROOT REQUIRED)
+
+
 #----------------------------------------------------------------------------
 # Setup Geant4 include directories and compile definitions
 #
 include(${Geant4_USE_FILE})
 
+
+
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project
 #
 include_directories(${PROJECT_SOURCE_DIR}/include 
-                    ${Geant4_INCLUDE_DIR})
+                    ${Geant4_INCLUDE_DIR}
+                    ${ROOT_INCLUDE_DIR})
 file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cc)
 file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
+
+
+root_generate_dictionary(
+  ACBaseHitDict            # path to dictionary to generate
+  ACBaseHit.hh  # list of includes
+  LINKDEF       # list of classes to process
+  ACBaseHitLinkDef.hh                    # ROOT linkDef file
+)
+add_library(hit SHARED ACBaseHitDict.cxx)
+set(sources ${sources} ACBaseHitDict.cxx)  # append dictionary to sources
+
+root_generate_dictionary(
+  ACBaseTrackDict            # path to dictionary to generate
+  ACBaseTrack.hh  # list of includes
+  LINKDEF       # list of classes to process
+  ACBaseTrackLinkDef.hh                    # ROOT linkDef file
+)
+add_library(track SHARED ACBaseTrackDict.cxx)
+set(sources ${sources} ACBaseTrackDict.cxx)  # append dictionary to sources
+
 
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
 #
 add_executable(ACsim ACsim.cc ${sources} ${headers})
-target_link_libraries(ACsim ${Geant4_LIBRARIES} ${AIDA_LIBRARIES} )
+target_link_libraries(ACsim hit track ${Geant4_LIBRARIES} ${ROOT_LIBRARIES})
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we

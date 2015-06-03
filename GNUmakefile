@@ -14,4 +14,7 @@ endif
 .PHONY: all
 all: lib bin
 
+CPPFLAGS += -I$(ROOTSYS)/include
+EXTRALIBS = $(shell root-config --glibs)
+
 include $(G4INSTALL)/config/binmake.gmk

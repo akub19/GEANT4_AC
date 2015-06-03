@@ -55,9 +55,9 @@ class GeometryConstruction : public G4VUserDetectorConstruction
     G4LogicalVolume*   fLogicVeto1;
     G4LogicalVolume*   fLogicVeto2;
     G4LogicalVolume*   fLogicVeto3;
-    G4LogicalVolume*   fLogicVeto4;
-    G4LogicalVolume*   fLogicVeto5;
-    G4LogicalVolume*   fLogicVeto6;
+    //G4LogicalVolume*   fLogicVeto4;
+    //G4LogicalVolume*   fLogicVeto5;
+    //G4LogicalVolume*   fLogicVeto6;
 
     G4Material*        fDetMat;
     G4Material*        fVetoMat;

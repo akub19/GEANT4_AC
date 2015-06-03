@@ -40,9 +40,11 @@ G4ThreadLocal G4Allocator<ACZipHit>* ACZipHitAllocator=0;
 ACZipHit::ACZipHit()
  : G4VHit(),
    fTrackID(-1),
-   fChamberNb(-1),
+   fPDGID(0),
+   fTime(-1),
    fEdep(0.),
-   fPos(G4ThreeVector())
+   fPos(G4ThreeVector()),
+   fEnergy(0.)
 {}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -55,8 +57,10 @@ ACZipHit::ACZipHit(const ACZipHit& right)
   : G4VHit()
 {
   fTrackID   = right.fTrackID;
-  fChamberNb = right.fChamberNb;
+  fPDGID     = right.fPDGID;
+  fTime      = right.fTime;
   fEdep      = right.fEdep;
+  fEnergy    = right.fEnergy;
   fPos       = right.fPos;
 }
 
@@ -65,8 +69,10 @@ ACZipHit::ACZipHit(const ACZipHit& right)
 const ACZipHit& ACZipHit::operator=(const ACZipHit& right)
 {
   fTrackID   = right.fTrackID;
-  fChamberNb = right.fChamberNb;
+  fPDGID     = right.fPDGID;
+  fTime      = right.fTime;
   fEdep      = right.fEdep;
+  fEnergy    = right.fEnergy;
   fPos       = right.fPos;
 
   return *this;
@@ -101,8 +107,10 @@ void ACZipHit::Draw()
 void ACZipHit::Print()
 {
   G4cout
-     << "  trackID: " << fTrackID << " chamberNb: " << fChamberNb
-     << "Edep: "
+     << "  PDG ID: " << fPDGID << " time: " << fTime
+     << " Particle Energy: "
+     << std::setw(7) << G4BestUnit(fEnergy,"Energy")
+     << " Edep: "
      << std::setw(7) << G4BestUnit(fEdep,"Energy")
      << " Position: "
      << std::setw(7) << G4BestUnit( fPos,"Length")
