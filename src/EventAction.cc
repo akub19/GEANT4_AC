@@ -25,7 +25,6 @@
 //
 
 #include "EventAction.hh"
-#include "HistoManager.hh"
 
 #include "TClonesArray.h"
 

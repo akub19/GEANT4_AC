@@ -38,11 +38,12 @@
 #include "TSystem.h"
 #include "ACZipHit.hh"
 #include "G4Track.hh"
-
+#include "RootIOMessenger.hh"
 
 class RootIO 
 {
 public: 
+  //RootIO();
   virtual ~RootIO();
   
   static RootIO* GetInstance();
@@ -50,6 +51,9 @@ public:
   void Close();
   void AddHits(ACZipHitsCollection * zipHits, G4int detID);
   void AddTrack(const G4Track* trk);
+  void Setup();
+  void SetFileName(G4String name);
+  G4String GetFileName();
 
 
 protected:
@@ -57,7 +61,9 @@ protected:
   
 private:
 
+   RootIOMessenger *fMessenger;
   // stuff for root
+   G4String fileName;
    TTree *theTree;
    TFile *theFile;
    TClonesArray* sHits;

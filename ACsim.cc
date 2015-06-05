@@ -49,6 +49,7 @@
 #include "GeometryConstruction.hh"
 #include "PhysicsList.hh"
 #include "ActionInitialization.hh"
+#include "RootIO.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo.....
 
@@ -71,14 +72,13 @@ int main(int argc,char** argv) {
 #endif
 
   // set mandatory initialization classes
+
   GeometryConstruction* detector = new GeometryConstruction;
   runManager->SetUserInitialization(detector);
   runManager->SetUserInitialization(new PhysicsList);
-  
   runManager->SetUserInitialization(new ActionInitialization);
- 
+  RootIO::GetInstance();
 
-   
 #ifdef G4VIS_USE
   // visualization manager
   G4VisManager* visManager = new G4VisExecutive;

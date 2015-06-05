@@ -6,6 +6,7 @@
 #/hits/activate Zip 
 
 /gps/verbose 0
+/gps/source/intensity 0.33
 /gps/particle gamma
 /gps/pos/type Surface
 /gps/pos/shape Sphere 
@@ -19,11 +20,39 @@
 #/gps/ene/ezero 2
 /gps/ene/max 3. MeV 
 
+/gps/source/add 0.33
+/gps/source/set 1
+/gps/particle gamma
+/gps/pos/type Surface
+/gps/pos/shape Sphere
+/gps/pos/centre 0. 0. 0.
+/gps/pos/radius 15. cm
+/gps/energy 1. MeV
+/gps/ang/type cos
+/gps/ene/type Mono
+
+
+
+/gps/source/add 0.34
+/gps/source/set 2
+/gps/particle gamma
+/gps/pos/type Surface
+/gps/pos/shape Sphere
+/gps/pos/centre 0. 0. 0.
+/gps/pos/radius 15. cm
+/gps/ang/type cos
+/gps/ene/type Mono
+/gps/energy 2. MeV
+
+/gps/source/list
+
 /run/printProgress 100
 #/tracking/verbose 1
 #/event/verbose 1
 
 #/control/execute vis.mac
 
-/run/beamOn 400000
+/root/fileName test1.root
+
+/run/beamOn 2000
 

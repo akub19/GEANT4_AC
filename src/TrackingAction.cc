@@ -32,7 +32,6 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "TrackingAction.hh"
-#include "HistoManager.hh"
 
 #include "G4Track.hh"
 #include "G4SystemOfUnits.hh"

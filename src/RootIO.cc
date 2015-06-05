@@ -34,6 +34,7 @@
 #include <sstream>
 
 #include "RootIO.hh"
+#include "RootIOMessenger.hh"
 #include "ACBaseHit.hh"
 #include "ACBaseTrack.hh"
 //
@@ -52,17 +53,25 @@ static RootIO* instance = 0;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-RootIO::RootIO()
+RootIO::RootIO():fileName("hits.root")
 {
-  // initialize ROOT
-  //TSystem ts;
-  //gSystem->Load("libExP01ClassesDict");
 
-  //ROOT::Cintex::Cintex::SetDebug(0);
-  //ROOT::Cintex::Cintex::Enable();
-  //gDebug = 1;
+  fMessenger = new RootIOMessenger(this);
 
-  theFile = new TFile("hits.root","RECREATE");
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+RootIO::~RootIO()
+{}
+
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void RootIO::Setup()
+{
+
+  theFile = new TFile(fileName,"RECREATE");
   theFile->cd();
   theTree  = new TTree("theTree", "go climb one");
   sHits  = new TClonesArray("ACBaseHit");
@@ -76,8 +85,18 @@ RootIO::RootIO()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-RootIO::~RootIO()
-{}
+
+void RootIO::SetFileName(G4String file)
+{
+  fileName = file;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+G4String RootIO::GetFileName()
+{
+  return fileName;
+}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
