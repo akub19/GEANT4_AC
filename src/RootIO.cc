@@ -81,6 +81,23 @@ void RootIO::Setup()
   theTree->Branch("sTracks",&sTracks, 6400, 0);
   trackC = 0;
 
+  theTree->Branch("hitC",&hitC,"hitC/I");
+  theTree->Branch("trackC",&trackC,"trackC/I");
+  theTree->Branch("event",&event,"event/I");
+  theTree->Branch("eInc",&eInc,"eInc/F");
+  theTree->Branch("eVetoTop",&eVetoTop,"eVetoTop/F");
+  theTree->Branch("eVetoBot",&eVetoBot,"eVetoBot/F");
+  theTree->Branch("eVetoRing",&eVetoRing,"eVetoRing/F");
+  theTree->Branch("eDet",&eDet,"eDet/F");
+  hitC = 0;
+  trackC = 0;
+  event = 1;
+  eInc = 0.;
+  eVetoTop = 0;
+  eVetoBot = 0;
+  eVetoRing = 0;
+  eDet = 0;
+
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -124,6 +141,10 @@ void RootIO::AddHits(ACZipHitsCollection * zipHits, G4int detID)
     hit->SetTime((*zipHits)[i]->GetTime());
     hit->SetInc(0);
     hitC++;
+    if (detID == 0) { eDet += (*zipHits)[i]->GetEdep(); }
+    if (detID == 1) { eVetoRing += (*zipHits)[i]->GetEdep(); }
+    if (detID == 2) { eVetoTop += (*zipHits)[i]->GetEdep(); }
+    if (detID == 3) { eVetoBot += (*zipHits)[i]->GetEdep(); }
   }
 }
 
@@ -141,6 +162,8 @@ void RootIO::AddTrack(const G4Track*  trk)
   G4ThreeVector mom = trk->GetMomentum();
   G4double px = mom.x(), py = mom.y(), pz = mom.z();
 
+  if (trk->GetParentID() == 0) { eInc = trk->GetTotalEnergy(); }
+
   ACBaseTrack* tr = new ((*sTracks)[trackC]) ACBaseTrack;
   tr->Setp4(px,py,pz,trk->GetTotalEnergy());
   tr->SetPos(x,y,z);
@@ -155,13 +178,16 @@ void RootIO::AddTrack(const G4Track*  trk)
 void RootIO::Write()
 {
 
-  nEvents++;
+  event++;
   theTree->Fill();
   sHits->Clear();
   sTracks->Clear();
   hitC = 0;
   trackC = 0;
-
+  eDet = 0;
+  eVetoTop = 0;
+  eVetoBot = 0;
+  eVetoRing = 0;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

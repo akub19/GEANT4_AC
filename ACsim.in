@@ -6,7 +6,7 @@
 #/hits/activate Zip 
 
 /gps/verbose 0
-/gps/source/intensity 0.33
+/gps/source/intensity 0.9
 /gps/particle gamma
 /gps/pos/type Surface
 /gps/pos/shape Sphere 
@@ -14,13 +14,14 @@
 /gps/pos/radius 15. cm
 /gps/ang/type cos
 #/gps/ang/focuspoint 0 0 0 cm
-/gps/ene/type Lin
-/gps/ene/gradient 0
-/gps/ene/intercept 1
-#/gps/ene/ezero 2
+#/gps/ene/type Lin
+#/gps/ene/gradient 0
+#/gps/ene/intercept 1
+
+/gps/ene/ezero .25
 /gps/ene/max 3. MeV 
 
-/gps/source/add 0.33
+/gps/source/add 0.05
 /gps/source/set 1
 /gps/particle gamma
 /gps/pos/type Surface
@@ -33,7 +34,7 @@
 
 
 
-/gps/source/add 0.34
+/gps/source/add 0.05
 /gps/source/set 2
 /gps/particle gamma
 /gps/pos/type Surface
@@ -52,7 +53,7 @@
 
 #/control/execute vis.mac
 
-/root/fileName test1.root
+/root/fileName expE0p25_spike1MeV_spike2MeV.root
 
-/run/beamOn 2000
+/run/beamOn 2000000
 

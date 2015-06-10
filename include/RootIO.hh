@@ -70,6 +70,7 @@ private:
    TClonesArray* sTracks;
    int hitC;
    int trackC;
-   int nEvents;
+   int event;
+   float eInc, eVetoTop, eVetoBot, eVetoRing, eDet;
 };
 #endif // INCLUDE_ROOTIO_HH

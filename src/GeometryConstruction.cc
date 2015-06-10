@@ -160,6 +160,7 @@ G4VPhysicalVolume* GeometryConstruction::Construct()
 
 
 
+
   G4bool fCheckOverlaps = true;
 
 
@@ -169,6 +170,9 @@ G4VPhysicalVolume* GeometryConstruction::Construct()
   G4double world_r = 50*cm;
   G4double detRad = 56.0*mm; // from chamber center to center!
   G4double detHalfZ = 20.0*mm; // width of the chambers
+
+  G4double vetoRingThickness = 3.54*cm;
+  //fVetoMat = vac;
 
 
   // Define bodies, logical volumes and physical volumes.
@@ -199,7 +203,7 @@ G4VPhysicalVolume* GeometryConstruction::Construct()
 
 
   // For donut setup
-  G4VSolid* veto1 = new G4Tubs("Vet11",detRad+1*cm,detRad+3.54*cm,detHalfZ,0,360*deg);
+  G4VSolid* veto1 = new G4Tubs("Vet11",detRad+1*cm,detRad+vetoRingThickness,detHalfZ,0,360*deg);
   G4VSolid* veto2 = new G4Tubs("Vet12",0.,detRad,detHalfZ,0,360*deg);
   G4VSolid* veto3 = new G4Tubs("Vet13",0.,detRad,detHalfZ,0,360*deg);
 
