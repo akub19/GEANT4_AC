@@ -49,7 +49,7 @@ TrackingAction::TrackingAction()
 void TrackingAction::PreUserTrackingAction(const G4Track* track)
 {
 
-  RootIO::GetInstance()->AddTrack(track);
+  if (track->GetDynamicParticle()->GetPDGcode() == 22) { RootIO::GetInstance()->AddTrack(track); }
   
 }
 

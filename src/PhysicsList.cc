@@ -300,7 +300,7 @@ void PhysicsList::ConstructEM() {
 	
 	G4GammaConversion* theGammaConversion = new G4GammaConversion();
 	theGammaConversion->SetEmModel(new G4LivermoreGammaConversionModel());
-	pmanager->AddDiscreteProcess(theGammaConversion);
+        pmanager->AddDiscreteProcess(theGammaConversion);
 
       } 
     else if (particleName == "e-") 
@@ -911,6 +911,7 @@ void PhysicsList::ConstructGeneral() {
 	} 
     }
 }
+
 
 // Cuts /////////////////////////////////////////////////////////////////////
 void PhysicsList::SetCuts() 

@@ -139,12 +139,15 @@ void RootIO::AddHits(ACZipHitsCollection * zipHits, G4int detID)
     hit->SetPid((*zipHits)[i]->GetPDGID());
     hit->SetDetID(detID);
     hit->SetTime((*zipHits)[i]->GetTime());
+    hit->SetPreProcess((*zipHits)[i]->GetPreProcess());
+    hit->SetPostProcess((*zipHits)[i]->GetPostProcess());
     hit->SetInc(0);
     hitC++;
     if (detID == 0) { eDet += (*zipHits)[i]->GetEdep(); }
     if (detID == 1) { eVetoRing += (*zipHits)[i]->GetEdep(); }
     if (detID == 2) { eVetoTop += (*zipHits)[i]->GetEdep(); }
     if (detID == 3) { eVetoBot += (*zipHits)[i]->GetEdep(); }
+
   }
 }
 
@@ -163,6 +166,11 @@ void RootIO::AddTrack(const G4Track*  trk)
   G4double px = mom.x(), py = mom.y(), pz = mom.z();
 
   if (trk->GetParentID() == 0) { eInc = trk->GetTotalEnergy(); }
+
+  //if (trk->GetParentID() == 0) { 
+  //  G4cout << trk->GetCreatorProcess()->GetProcessName() << G4endl;
+  //}
+
 
   ACBaseTrack* tr = new ((*sTracks)[trackC]) ACBaseTrack;
   tr->Setp4(px,py,pz,trk->GetTotalEnergy());

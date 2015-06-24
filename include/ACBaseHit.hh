@@ -13,6 +13,8 @@ private:
     int _detID;
     float _time;
     int _inc;
+    int _pre;
+    int _post;
 
 public:
     ACBaseHit();
@@ -26,6 +28,8 @@ public:
     int detID() const;
     float time() const;
     int inc() const;
+    int preproc() const;
+    int postproc() const;
 
     // "set" methods ---------
     void SetPos(float vx, float vy, float vz);
@@ -34,6 +38,8 @@ public:
     void SetDetID(int d);
     void SetTime(float t);
     void SetInc(int i);
+    void SetPreProcess(int p);
+    void SetPostProcess(int p);
 
     ClassDef(ACBaseHit, 1);
 

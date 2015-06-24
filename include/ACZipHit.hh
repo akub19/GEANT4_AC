@@ -59,6 +59,9 @@ class ACZipHit : public G4VHit
     void SetEdep     (G4double de)      { fEdep = de; };
     void SetPos      (G4ThreeVector xyz){ fPos = xyz; };
     void SetParticleEnergy (G4double e1){ fEnergy = e1; };
+    void SetPreProcess (G4int pre)      { fPreProc = pre; };
+    void SetPostProcess (G4int post)      { fPostProc = post; };
+
 
     // Get methods
     G4int GetTrackID() const     { return fTrackID; };
@@ -67,11 +70,16 @@ class ACZipHit : public G4VHit
     G4double GetEdep() const     { return fEdep; };
     G4ThreeVector GetPos() const { return fPos; };
     G4double GetParticleEnergy() const { return fEnergy; };
+    G4int GetPreProcess() const  {return fPreProc; };
+    G4int GetPostProcess() const  {return fPostProc; };
+
 
   private:
 
       G4int         fTrackID;
       G4int         fPDGID;
+      G4int         fPreProc;
+      G4int         fPostProc;
       G4double         fTime;
       G4double      fEdep;
       G4ThreeVector fPos;

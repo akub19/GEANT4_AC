@@ -41,6 +41,8 @@ ACZipHit::ACZipHit()
  : G4VHit(),
    fTrackID(-1),
    fPDGID(0),
+   fPreProc(0),
+   fPostProc(0),
    fTime(-1),
    fEdep(0.),
    fPos(G4ThreeVector()),
@@ -58,6 +60,8 @@ ACZipHit::ACZipHit(const ACZipHit& right)
 {
   fTrackID   = right.fTrackID;
   fPDGID     = right.fPDGID;
+  fPreProc   = right.fPreProc;
+  fPostProc  = right.fPostProc;
   fTime      = right.fTime;
   fEdep      = right.fEdep;
   fEnergy    = right.fEnergy;
@@ -70,6 +74,8 @@ const ACZipHit& ACZipHit::operator=(const ACZipHit& right)
 {
   fTrackID   = right.fTrackID;
   fPDGID     = right.fPDGID;
+  fPreProc   = right.fPreProc;
+  fPostProc  = right.fPostProc;
   fTime      = right.fTime;
   fEdep      = right.fEdep;
   fEnergy    = right.fEnergy;

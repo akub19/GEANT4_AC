@@ -30,7 +30,7 @@
 #include "G4ThreeVector.hh"
 #include "G4SDManager.hh"
 #include "G4ios.hh"
-
+#include "G4VProcess.hh"
 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -76,15 +76,39 @@ G4bool ACZipSD::ProcessHits(G4Step* aStep,
 
   ACZipHit* newHit = new ACZipHit();
 
+
+  G4int postproc = 0;
+  G4int preproc = 0;
+  if (aStep->GetTrack()->GetParentID() == 0){  
+    G4String pre = aStep->GetPreStepPoint()->GetProcessDefinedStep()->GetProcessName();
+    G4String post = aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName();
+
+    if (pre ==  "Transportation"){ preproc = 5; }
+    if (pre ==  "Rayl"){ preproc = 4; }
+    if (pre ==  "compt"){ preproc = 1; }
+    if (pre ==  "phot"){ preproc = 2; }
+    if (pre ==  "conv"){ preproc = 3; }
+     if (post ==  "Transportation"){ postproc = 5; }
+    if (post ==  "Rayl"){ postproc = 4; }
+    if (post ==  "compt"){ postproc = 1; }
+    if (post ==  "phot"){ postproc = 2; }
+    if (post ==  "conv"){ postproc = 3; }
+    //G4cout << aStep->GetPreStepPoint()->GetKineticEnergy() << "  " << aStep->GetPostStepPoint()->GetKineticEnergy() << G4endl;
+    //G4cout << aStep->GetPreStepPoint()->GetKineticEnergy() - aStep->GetPostStepPoint()->GetKineticEnergy() << G4endl;
+    //G4cout << aStep->GetDeltaEnergy() << G4endl;
+  }
+
+
   newHit->SetTrackID  (aStep->GetTrack()->GetTrackID());
   newHit->SetPDGID (aStep->GetTrack()->GetDefinition()->GetPDGEncoding());
-  newHit->SetTime(aStep->GetPreStepPoint()->GetGlobalTime());
-  newHit->SetEdep(edep);
+  newHit->SetTime(aStep->GetPostStepPoint()->GetGlobalTime());
+  newHit->SetEdep(aStep->GetTotalEnergyDeposit());
   newHit->SetPos (aStep->GetPostStepPoint()->GetPosition());
   newHit->SetParticleEnergy(aStep->GetPreStepPoint()->GetKineticEnergy()); 
+  newHit->SetPreProcess(preproc);
+  newHit->SetPostProcess(postproc);
 
   fHitsCollection->insert( newHit );
-
   //newHit->Print();
 
   return true;

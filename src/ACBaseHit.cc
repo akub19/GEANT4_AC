@@ -38,6 +38,14 @@ int ACBaseHit::inc() const {
    return _inc;
 }
 
+int ACBaseHit::preproc() const {
+   return _pre;
+}
+
+int ACBaseHit::postproc() const {
+   return _post;
+}
+
 // "set" methods ---------------------------------------------
 
 void ACBaseHit::SetInc(int i) {
@@ -65,3 +73,10 @@ void ACBaseHit::SetEdep(float e) {
    _edep = e;
 }
 
+void ACBaseHit::SetPreProcess(int p) {
+   _pre = p;
+}
+
+void ACBaseHit::SetPostProcess(int p) {
+   _post = p;
+}

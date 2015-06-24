@@ -149,7 +149,6 @@ G4VPhysicalVolume* GeometryConstruction::Construct()
   G4NistManager* nistManager = G4NistManager::Instance();
   
   fDetMat  = nistManager->FindOrBuildMaterial("G4_Ge");
-  fVetoMat   = nistManager->FindOrBuildMaterial("G4_Ge");
 
   
   //G4Material* air  = nistManager->FindOrBuildMaterial("G4_AIR");
@@ -158,6 +157,8 @@ G4VPhysicalVolume* GeometryConstruction::Construct()
   G4Material* vac = new G4Material("Vacuum", 1., 1.01*g/mole, universe_mean_density,
                                  kStateGas,0.000017*kelvin,1.e-19*pascal);
 
+  fVetoMat   = nistManager->FindOrBuildMaterial("G4_Ge");
+  //fVetoMat   = vac;
 
 
 
@@ -168,11 +169,14 @@ G4VPhysicalVolume* GeometryConstruction::Construct()
   // Define size of world and volumes in it.
   //
   G4double world_r = 50*cm;
-  G4double detRad = 56.0*mm; // from chamber center to center!
-  G4double detHalfZ = 20.0*mm; // width of the chambers
+  G4double detRad = 50.8*mm; // from chamber center to center!
+  G4double detHalfZ = 12.7*mm; 
 
-  G4double vetoRingThickness = 3.54*cm;
-  //fVetoMat = vac;
+  //G4double vetoRingThickness = .5*cm;
+  //G4double vetoRingThickness = 1.5*cm;
+  //G4double vetoRingThickness = 2.5*cm;
+  //G4double vetoRingThickness = 3.5*cm;
+  G4double vetoRingThickness = 4.5*cm;
 
 
   // Define bodies, logical volumes and physical volumes.
@@ -203,13 +207,13 @@ G4VPhysicalVolume* GeometryConstruction::Construct()
 
 
   // For donut setup
-  G4VSolid* veto1 = new G4Tubs("Vet11",detRad+1*cm,detRad+vetoRingThickness,detHalfZ,0,360*deg);
-  G4VSolid* veto2 = new G4Tubs("Vet12",0.,detRad,detHalfZ,0,360*deg);
-  G4VSolid* veto3 = new G4Tubs("Vet13",0.,detRad,detHalfZ,0,360*deg);
+  G4VSolid* veto1 = new G4Tubs("Vet11",detRad+2*mm,detRad+2*mm+vetoRingThickness,detHalfZ,0,360*deg);
+  G4VSolid* veto2 = new G4Tubs("Vet12",0.,detRad+2*mm+vetoRingThickness,detHalfZ,0,360*deg);
+  G4VSolid* veto3 = new G4Tubs("Vet13",0.,detRad+2*mm+vetoRingThickness,detHalfZ,0,360*deg);
 
   G4ThreeVector zTrans1(0,0,0);
-  G4ThreeVector zTrans2(0,0,(detHalfZ + 2.54*cm));
-  G4ThreeVector zTrans3(0,0,-1*(detHalfZ + 2.54*cm));
+  G4ThreeVector zTrans2(0,0,(2*detHalfZ + 5.*mm));
+  G4ThreeVector zTrans3(0,0,-1*(2*detHalfZ + 5.*mm));
 
   fLogicVeto1 = new G4LogicalVolume(veto1, fVetoMat,"Veto1_log");
   new G4PVPlacement(0,
@@ -222,10 +226,10 @@ G4VPhysicalVolume* GeometryConstruction::Construct()
                     fCheckOverlaps); // checking overlaps 
 
 
-  fLogicVeto2 = new G4LogicalVolume(veto2, fVetoMat,"Veto2_log");
+  fLogicVeto2 = new G4LogicalVolume(veto2, fDetMat,"Veto2_log");
   new G4PVPlacement(0,zTrans2,fLogicVeto2,"Veto2_phys",universe_log,false,0,fCheckOverlaps);
 
-  fLogicVeto3 = new G4LogicalVolume(veto3, fVetoMat,"Veto3_log");
+  fLogicVeto3 = new G4LogicalVolume(veto3, fDetMat,"Veto3_log");
   new G4PVPlacement(0,zTrans3,fLogicVeto3,"Veto3_phys",universe_log,false,0,fCheckOverlaps);
 
 
